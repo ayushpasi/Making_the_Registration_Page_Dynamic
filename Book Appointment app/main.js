@@ -26,11 +26,12 @@ function saveData(e) {
 
   axios
     .post(
-      "https://crudcrud.com/api/832d19e4675b4275b12a83d9b049af91/appointmentData",
+      "https://crudcrud.com/api/f8941a371ebf4465897b4edc60063241/appointmentData",
       dataObj
     )
     .then((res) => {
       console.log(res.data);
+
       showData(res.data);
     })
     .catch((err) => {
@@ -68,6 +69,15 @@ function showData(obj) {
   // Add a click event listener to the delete button
   btn.onclick = () => {
     user.removeChild(li);
+    axios
+      .delete(
+        "https://crudcrud.com/api/f8941a371ebf4465897b4edc60063241/appointmentData/" +
+          obj._id
+      )
+      .then((res) => {})
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // Create an edit button element
@@ -93,16 +103,11 @@ function showData(obj) {
 
   // Append the list item to the "users" ul
   user.appendChild(li);
-
-  // Log the data stored in local storage for the given email
-  console.log(localStorage.getItem(email));
-
-  // Clear the form fields after submission
 }
 window.addEventListener("DOMContentLoaded", () => {
   axios
     .get(
-      "https://crudcrud.com/api/832d19e4675b4275b12a83d9b049af91/appointmentData"
+      "https://crudcrud.com/api/f8941a371ebf4465897b4edc60063241/appointmentData"
     )
     .then((res) => {
       var data = res.data;
