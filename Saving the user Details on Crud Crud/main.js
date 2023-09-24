@@ -40,46 +40,6 @@ function saveData(e) {
   document.getElementById("name").value = "";
   document.getElementById("email").value = "";
   document.getElementById("mobile").value = "";
-  // Convert the data object to a JSON string
-  //var data = JSON.stringify(dataObj);
-
-  // Store the JSON data in local storage with the email as the key
-  // localStorage.setItem(email, data);
-}
-// Function to remove a user when the delete button is clicked
-function removeUser(e) {
-  if (confirm("Are you sure?")) {
-    var li = e.target.parentNode;
-    user.removeChild(li);
-    var emailDelete = findEmail(li);
-    localStorage.removeItem(emailDelete[1].trim());
-  }
-}
-// Function to split and extract the name, email, and mobile from the list item
-function findEmail(li) {
-  var text = li.textContent;
-  var parts = text.split("  ");
-  if (parts.length > 1) {
-    return parts;
-  }
-  return null;
-}
-
-// Function to handle editing user data
-function editData(e) {
-  var li = e.target.parentNode;
-  user.removeChild(li);
-  var formData = findEmail(li);
-
-  // Extract the name, email, and mobile separately
-  var name = formData[0].trim();
-  var email = formData[1].trim();
-  var mobile = formData[2].trim();
-
-  // Set the form fields with the extracted values for editing
-  document.getElementById("name").value = name;
-  document.getElementById("email").value = email;
-  document.getElementById("mobile").value = mobile;
 }
 
 function showData(obj) {
@@ -106,7 +66,9 @@ function showData(obj) {
   btn.appendChild(document.createTextNode("delete"));
 
   // Add a click event listener to the delete button
-  btn.addEventListener("click", removeUser);
+  btn.onclick = () => {
+    user.removeChild(li);
+  };
 
   // Create an edit button element
   var edit = document.createElement("button");
@@ -118,7 +80,12 @@ function showData(obj) {
   edit.appendChild(document.createTextNode("edit"));
 
   // Add a click event listener to the edit button
-  edit.addEventListener("click", editData);
+  edit.onclick = () => {
+    user.removeChild(li);
+    document.getElementById("name").value = obj.name;
+    document.getElementById("email").value = obj.email;
+    document.getElementById("mobile").value = obj.mobile;
+  };
 
   // Append the edit and delete buttons to the list item
   li.appendChild(edit);
@@ -132,7 +99,7 @@ function showData(obj) {
 
   // Clear the form fields after submission
 }
-function fetchAndShowData() {
+window.addEventListener("DOMContentLoaded", () => {
   axios
     .get(
       "https://crudcrud.com/api/832d19e4675b4275b12a83d9b049af91/appointmentData"
@@ -146,7 +113,4 @@ function fetchAndShowData() {
     .catch((err) => {
       console.log("Error fetching data:", err);
     });
-}
-
-// Call the fetchAndShowData function on page load to display existing data
-fetchAndShowData();
+});
