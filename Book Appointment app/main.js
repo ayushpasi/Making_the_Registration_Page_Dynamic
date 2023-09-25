@@ -26,7 +26,7 @@ function saveData(e) {
 
   axios
     .post(
-      "https://crudcrud.com/api/f8941a371ebf4465897b4edc60063241/appointmentData",
+      "https://crudcrud.com/api/9b97434d579c4934be25befc8ecbbe85/appointmentData",
       dataObj
     )
     .then((res) => {
@@ -71,7 +71,7 @@ function showData(obj) {
     user.removeChild(li);
     axios
       .delete(
-        "https://crudcrud.com/api/f8941a371ebf4465897b4edc60063241/appointmentData/" +
+        "https://crudcrud.com/api/9b97434d579c4934be25befc8ecbbe85/appointmentData/" +
           obj._id
       )
       .then((res) => {})
@@ -92,6 +92,15 @@ function showData(obj) {
   // Add a click event listener to the edit button
   edit.onclick = () => {
     user.removeChild(li);
+    axios
+      .delete(
+        "https://crudcrud.com/api/9b97434d579c4934be25befc8ecbbe85/appointmentData/" +
+          obj._id
+      )
+      .then((res) => {})
+      .catch((err) => {
+        console.log(err);
+      });
     document.getElementById("name").value = obj.name;
     document.getElementById("email").value = obj.email;
     document.getElementById("mobile").value = obj.mobile;
@@ -107,7 +116,7 @@ function showData(obj) {
 window.addEventListener("DOMContentLoaded", () => {
   axios
     .get(
-      "https://crudcrud.com/api/f8941a371ebf4465897b4edc60063241/appointmentData"
+      "https://crudcrud.com/api/9b97434d579c4934be25befc8ecbbe85/appointmentData"
     )
     .then((res) => {
       var data = res.data;
